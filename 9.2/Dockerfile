@@ -29,10 +29,12 @@ ADD root /
 # This image must forever use UID 26 for postgres user so our volumes are
 # safe in the future. This should *never* change, the last test is there
 # to make sure of that.
-RUN yum install -y centos-release-scl && \
-    INSTALL_PKGS="rsync tar gettext bind-utils postgresql92 postgresql92-postgresql-contrib nss_wrapper" && \
+RUN yum install -y centos-release-scl epel-release && \
+    INSTALL_PKGS="rsync tar gettext bind-utils postgresql92 postgresql92-postgresql-contrib nss_wrapper pg-semver" && \
     yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
+    mv /usr/lib64/pgsql/semver.so /opt/rh/postgresql92/root/usr/lib64/pgsql/semver.so && \
+    mv /usr/share/pgsql/extension/* /opt/rh/postgresql92/root/usr/share/pgsql/extension && \
     yum clean all && \
     localedef -f UTF-8 -i en_US en_US.UTF-8 && \
     test "$(id postgres)" = "uid=26(postgres) gid=26(postgres) groups=26(postgres)" && \

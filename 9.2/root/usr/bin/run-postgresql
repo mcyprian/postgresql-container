@@ -20,9 +20,9 @@ fi
 pg_ctl -w start -o "-h ''"
 if [ "${NEED_TO_CREATE_USERS:-}" == "yes" ]; then
   create_users
+  create_extensions
 fi
 set_passwords
 pg_ctl stop
-
 unset_env_vars
 exec postgres "$@"

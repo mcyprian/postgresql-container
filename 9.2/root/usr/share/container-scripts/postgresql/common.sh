@@ -218,3 +218,8 @@ function wait_for_postgresql_master() {
     sleep 1
   done
 }
+
+function create_extensions() {
+    echo "Creating semver extension ..."
+    psql --command "CREATE EXTENSION semver;"
+}
