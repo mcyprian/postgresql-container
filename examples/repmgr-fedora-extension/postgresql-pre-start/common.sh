@@ -65,6 +65,7 @@ EOF
 }
 
 function create_user_repmgr() {
+  echo "CREATING repmgr USER and DATABASE"
   if [ -v ENABLE_REPMGR ]; then
     createuser -s repmgr
     createdb --owner=repmgr repmgr
